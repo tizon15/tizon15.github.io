@@ -1,12 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, of } from 'rxjs';
-import { DifficultyPipe, TriviaCategory, Levels, Result } from './index';
+import {
+  DifficultyPipe,
+  TriviaCategory,
+  Levels,
+  Result,
+  Question,
+} from './index';
+import { shuffle } from 'lodash';
 
 @Injectable({
   providedIn: 'root',
 })
-export class QuestionsService {
+export class QuizService {
   constructor(private http: HttpClient) {}
 
   getCategory(): Observable<TriviaCategory> {
@@ -25,6 +32,18 @@ export class QuestionsService {
       .get<Result>(url)
       .pipe(catchError(this.handleError<Result>('getQuestions')));
   }
+
+  getAnswers(question: Question): string[] {
+    if (question) {
+      let answers = question.incorrect_answers.concat(question.correct_answer);
+      answers = shuffle(answers);
+      return answers;
+    } else {
+      return [];
+    }
+  }
+
+  // formBuilder
   private handleError<T>(_operation = 'operation', result?: T) {
     return (error: string): Observable<T> => {
       console.error(error);

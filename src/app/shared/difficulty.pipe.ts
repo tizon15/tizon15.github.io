@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Levels } from './questions.model';
+import { Levels } from './index';
 
 @Pipe({ name: 'difficulty' })
 export class DifficultyPipe implements PipeTransform {

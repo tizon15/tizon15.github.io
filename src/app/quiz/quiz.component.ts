@@ -1,14 +1,20 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { Subject, Subscription, takeUntil } from 'rxjs';
 import {
-  QuestionsService,
   Category,
-  TriviaCategory,
   Levels,
-  Result,
   Question,
+  QuizService,
+  Result,
+  TriviaCategory,
 } from '../shared/index';
-import { shuffle } from 'lodash';
 @Component({
   selector: 'app-quiz',
   templateUrl: './quiz.component.html',
@@ -16,15 +22,16 @@ import { shuffle } from 'lodash';
 })
 export class QuizComponent implements OnInit, OnDestroy {
   private getCategorySub: Subscription | null | undefined;
+  hasSelection = false;
+  showQuestions: boolean = false;
   categories: Category[] | undefined;
   questions: Question[] | undefined;
-  number = Math.floor(Math.random() * 3) + 1;
   private difficulty: Levels | undefined;
   private destroy$: Subject<boolean> = new Subject<boolean>();
   constructor(
-    private questionsService: QuestionsService,
-    private cdr: ChangeDetectorRef
+    private questionsService: QuizService,
   ) {}
+
   ngOnInit(): void {
     this.getCategorySub = this.questionsService
       .getCategory()
@@ -33,32 +40,30 @@ export class QuizComponent implements OnInit, OnDestroy {
         this.categories = data.trivia_categories;
       });
   }
+  isDisable(categoryValue: number, difficultyValue: number) {
+    let category = categoryValue || categoryValue;
+    let difficulty = difficultyValue || difficultyValue;
+    if (category > 0 && difficulty > 0) {
+      return false;
+    } else {
+      return true;
+    }
+  }
   createQuestions(category: string, difficulty: string) {
+    this.showQuestions = false;
+    this.hasSelection = true;
     this.difficulty = this.questionsService.getDifficulty(+difficulty);
-    console.log(+category);
-    console.log(this.difficulty);
     this.questionsService
       .getQuestions(+category, this.difficulty)
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: Result) => {
-        console.log('questions', data);
-        this.questions = data.results;
+        if (data) {
+          this.questions = data.results;
+          this.showQuestions = true;
+        }
       });
   }
-  getAnswers(question: any): string[] {
-    // this.cdr.detectChanges();
-    let answers = question.incorrect_answers.concat(question.correct_answer);
-    answers = answers
-      .map((x: string) => ({ ord: Math.random(), data: x }))
-      .sort((a: { ord: number }, b: { ord: number }) =>
-        a.ord > b.ord ? 1 : a.ord < b.ord ? -1 : 0
-      )
-      .map((x: { data: string }) => x.data);
-    return answers;
-  }
-  answerTrackBy(index: any, answers: any) {
-    return answers.name;
-  }
+
   ngOnDestroy(): void {
     this.destroy$.next(true);
     // Unsubscribe from the subject
