@@ -6,11 +6,11 @@ export class DifficultyPipe implements PipeTransform {
   transform(value: number): Levels {
     switch (value) {
       default:
-        return 'Easy';
+        return 'easy';
       case 2:
-        return 'Medium';
+        return 'medium';
       case 3:
-        return 'Hard';
+        return 'hard';
     }
   }
 }

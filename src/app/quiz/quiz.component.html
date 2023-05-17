@@ -1,18 +1,33 @@
 <h1 class="title">Quiz Maker</h1>
 <ng-container>
-  <div class="form-group select-wrapper container">
-    <select name="categorySelect" id="categorySelect" #categorySelect class="form-control">
-      <option value="" [hidden]="+categorySelect.value == 0" >Select a category</option>
-      <option [value]="category.id" *ngFor="let category of categories">
-        {{ category.name }}
-      </option>
-    </select>
-    <select name="difficultySelect" id="difficultySelect" #difficultySelect class="form-control">
-      <option value="" [hidden]="+difficultySelect.value == 0">Select a difficulty</option>
-      <option value="1">Easy</option>
-      <option value="2">Medium</option>
-      <option value="3">Hard</option>
-    </select>
-    <button type="submit" class="btn mb-4" (click)="createQuestions(categorySelect.value, difficultySelect.value)">Create</button>
-  </div>
+    <div class="form-group select-wrapper container">
+        <select name="categorySelect" id="categorySelect" #categorySelect class="form-control">
+            <option value="" [hidden]="+categorySelect.value == 0">
+                Select a category
+            </option>
+            <option [value]="category.id" *ngFor="let category of categories">
+                {{ category.name }}
+            </option>
+        </select>
+        <select name="difficultySelect" id="difficultySelect" #difficultySelect class="form-control">
+            <option value="" [hidden]="+difficultySelect.value == 0">
+                Select a difficulty
+            </option>
+            <option value="1">Easy</option>
+            <option value="2">Medium</option>
+            <option value="3">Hard</option>
+        </select>
+        <button type="submit" id="createBtn" class="btn mb-4" (click)="createQuestions(categorySelect.value, difficultySelect.value)">
+            Create
+        </button>
+    </div>
+</ng-container>
+<ng-container *ngIf="questions">
+    <div *ngFor="let question of questions">
+        <p>{{ question.question }}</p>
+        <div *ngFor="let answers of getAnswers(question); trackBy:answerTrackBy">
+            <button type="submit" class="btn btn-outline-success mb-4">{{ answers }}</button>
+
+        </div>
+    </div>
 </ng-container>
