@@ -1,3 +1,3 @@
 export * from './difficulty.pipe'
-export * from './questions.model'
-export * from './questions.service'
+export * from './quiz.model'
+export * from './quiz.service'

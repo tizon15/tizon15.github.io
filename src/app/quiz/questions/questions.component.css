@@ -1,0 +1,12 @@
+.answers {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 1em;
+  }
+  .question {
+    display: flex;
+    justify-content: center;
+    padding: 0.5em;
+  }
+  
