@@ -1,7 +1,7 @@
 <h1 class="title">Quiz Maker</h1>
 <ng-container>
     <div class="form-group select-wrapper container">
-        <select name="categorySelect" id="categorySelect" [ngModel]="categorySelect.value" #categorySelect class="form-control">
+        <select name="categorySelect" id="categorySelect" [(ngModel)]="category" #categorySelect class="form-control">
             <option value="" [hidden]="+categorySelect.value >= 0">
                 Select a category
             </option>
@@ -9,7 +9,7 @@
                 {{ category.name }}
             </option>
         </select>
-        <select name="difficultySelect" id="difficultySelect" [(ngModel)]="difficultySelect.value" #difficultySelect class="form-control">
+        <select name="difficultySelect" id="difficultySelect" [(ngModel)]="difficulty" #difficultySelect class="form-control">
             <option value="" [hidden]="+difficultySelect.value >= 0">
                 Select a difficulty
             </option>
@@ -17,16 +17,27 @@
             <option value="2">Medium</option>
             <option value="3">Hard</option>
         </select>
-        <button type="submit" id="createBtn" class="btn" [disabled]="isDisable(+categorySelect.value, +difficultySelect.value)"
-            (click)="createQuestions(categorySelect.value, difficultySelect.value)">
+        <button type="submit" id="createBtn" class="btn" [disabled]="isDisable()"
+            (click)="createQuestions()">
             Create
         </button>
     </div>
 </ng-container>
-<ng-container *ngIf="showQuestions; else loading">
-    <app-questions [questions]="questions"></app-questions>
+<ng-container *ngIf="showQuestions">
+ <ng-container *ngIf="hasSelection; else loading">
+    <div *ngFor="let question of questions; index as i">
+        <h4 class="question" [innerHTML]="question.question"></h4>
+        <div class="answers">
+            <ng-container *ngFor="let answer of answers[i]"><!--  -->
+                <button appHighlight class="btn btn-outline-success mr-2"  [innerHTML]="answer"  ><!-- (click)="clickAnswers(answer, i, question)" -->
+                </button>
+            </ng-container>
+        </div>
+    </div>
 </ng-container>
 
-<ng-template #loading >
-    <h3 class="title" *ngIf="hasSelection">Loading...</h3>
+<ng-template #loading>
+    <h3 class="title">Loading...</h3>
 </ng-template>
+</ng-container>
+

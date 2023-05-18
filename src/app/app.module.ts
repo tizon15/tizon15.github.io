@@ -6,11 +6,11 @@ import { RouterModule } from '@angular/router';
 import { appRoutes } from './routes';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { DifficultyPipe, QuizService } from './shared/index';
-import { QuestionsComponent, QuizComponent } from './quiz/index';
+import { DifficultyPipe, HighlightDirective, QuizService } from './shared/index';
+import { QuizComponent } from './quiz/index';
 
 @NgModule({
-  declarations: [AppComponent, QuizComponent, ResultsComponent, DifficultyPipe, QuestionsComponent],
+  declarations: [AppComponent, QuizComponent, ResultsComponent, DifficultyPipe, HighlightDirective],
   imports: [
     BrowserModule,
     RouterModule.forRoot(appRoutes),

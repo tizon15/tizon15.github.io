@@ -1,21 +1,24 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { FormArray, FormBuilder } from '@angular/forms';
+import { shuffle } from 'lodash';
 import { Observable, catchError, of } from 'rxjs';
 import {
   DifficultyPipe,
-  TriviaCategory,
   Levels,
-  Result,
   Question,
+  QuizResult,
+  Result,
+  TriviaCategory,
 } from './index';
-import { shuffle } from 'lodash';
+import { FormGroup } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
 })
 export class QuizService {
-  constructor(private http: HttpClient) {}
-
+  constructor(private http: HttpClient, private fb: FormBuilder) {}
   getCategory(): Observable<TriviaCategory> {
     return this.http
       .get<TriviaCategory>('https://opentdb.com/api_category.php')
@@ -32,7 +35,6 @@ export class QuizService {
       .get<Result>(url)
       .pipe(catchError(this.handleError<Result>('getQuestions')));
   }
-
   getAnswers(question: Question): string[] {
     if (question) {
       let answers = question.incorrect_answers.concat(question.correct_answer);
