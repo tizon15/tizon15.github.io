@@ -11,5 +11,7 @@ export const appRoutes: Routes = [
     path: 'resultQuiz',
     component: ResultsComponent,
   },
-  { path: '**', redirectTo: '/quiz', pathMatch: 'full' },
+  { path: '', redirectTo: 'quiz', pathMatch: 'full' },
+
+  { path: '**', redirectTo: 'quiz', pathMatch: 'full' },
 ];
