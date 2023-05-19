@@ -28,7 +28,7 @@
 
         <div *ngFor="let question of questionForm.controls; index as i">
             <h5 class="questions" [innerHTML]="question.value"></h5>
-            <form class="questions" [formGroup]="getFormGroup(selectionForm.controls[i])">
+            <form class="questions" [formGroup]="getSelectedItemFormGroup(selectionForm.controls[i])">
                 <ng-container *ngFor="let value of answersForm.controls[i].value">
                     <button appHighlight class="btn btn-outline-success mr-2" [name]="value" [innerHTML]="value"
                         formControlName="item" ngDefaultControl
@@ -36,8 +36,8 @@
                 </ng-container>
             </form>
         </div>
-        <div class="questions"> <button class="btn btn-secondary mt-5 col-md-6" *ngIf="checkResult()" (click)="clickAnswers()"
-                [routerLink]="'../resultQuiz'">Submit</button>
+        <div class="questions"> <button class="btn btn-secondary mt-5 col-md-6" *ngIf="checkResult()"
+                (click)="clickAnswers()" [routerLink]="'/resultQuiz'">Submit</button>
         </div>
     </ng-container>
 

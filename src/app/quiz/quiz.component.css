@@ -1,24 +1,8 @@
-.select-wrapper {
-  display: flex;
-  padding: 1em;
-  align-items: center;
-}
-.select {
-  margin-left: 1em;
-}
-.title {
-  display: flex;
-  justify-content: center;
-  padding-top: 1em;
-}
+
+
 /* .answers {
   display: flex;
   justify-content: center;
   align-items: center;
   padding-bottom: 1em;
 } */
-.questions {
-  display: flex;
-  justify-content: center;
-  padding: 0.5em;
-}

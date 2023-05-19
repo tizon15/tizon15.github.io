@@ -33,5 +33,4 @@ export interface QuizResult {
   question: Question,
   selectedAnswer: string,
   answers: string[],
-  id:number
 }

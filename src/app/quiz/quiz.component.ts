@@ -37,7 +37,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   get questionForm() {
     return this.formGroup.get('question') as FormArray;
   }
-  getFormGroup(item: AbstractControl) {
+  getSelectedItemFormGroup(item: AbstractControl) {
     return item as FormGroup;
   }
 

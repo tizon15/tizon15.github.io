@@ -60,6 +60,7 @@ export class QuizService {
     selectedArray.push(
       new FormGroup({
         item: new FormControl('', [Validators.required]),
+        correctAnswer: new FormControl(question.correct_answer)
       })
     );
     return formGroup
