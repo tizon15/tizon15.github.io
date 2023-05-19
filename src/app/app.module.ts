@@ -1,23 +1,24 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { AppComponent } from './app.component';
-import { ResultsComponent } from './results/results.component';
-import { RouterModule } from '@angular/router';
-import { appRoutes } from './routes';
 import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { DifficultyPipe, HighlightDirective, QuizService } from './shared/index';
+import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
+import { AppComponent } from './app.component';
 import { QuizComponent } from './quiz/index';
+import { ResultsComponent } from './results/results.component';
+import { appRoutes } from './routes';
+import { DifficultyPipe, HighlightDirective, QuizService } from './shared/index';
 
 @NgModule({
   declarations: [AppComponent, QuizComponent, ResultsComponent, DifficultyPipe, HighlightDirective],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(appRoutes),
+    RouterModule.forRoot(appRoutes, { useHash: true }),
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
   ],
+  exports:[RouterModule],
   providers: [QuizService],
   bootstrap: [AppComponent],
 })
