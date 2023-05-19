@@ -13,7 +13,7 @@ import { DifficultyPipe, HighlightDirective, QuizService } from './shared/index'
   declarations: [AppComponent, QuizComponent, ResultsComponent, DifficultyPipe, HighlightDirective],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(appRoutes, { useHash: true }),
+    RouterModule.forRoot(appRoutes),
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
