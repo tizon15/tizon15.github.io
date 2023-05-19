@@ -30,14 +30,15 @@
             <h5 class="questions" [innerHTML]="question.value"></h5>
             <form class="questions" [formGroup]="getSelectedItemFormGroup(selectionForm.controls[i])">
                 <ng-container *ngFor="let value of answersForm.controls[i].value">
-                    <button appHighlight class="btn btn-outline-success mr-2" [name]="value" [innerHTML]="value"
+                    <button appHighlight class="btn btn-outline-success mr-2" [innerHTML]="value" name="item" 
                         formControlName="item" ngDefaultControl
                         (click)="onClickAnswer(value, selectionForm.controls[i])"></button>
                 </ng-container>
             </form>
         </div>
-        <div class="questions"> <button class="btn btn-secondary mt-5 col-md-6" *ngIf="checkResult()"
-                (click)="clickAnswers()" [routerLink]="'/resultQuiz'">Submit</button>
+        <div class="questions">
+            <button class="btn btn-secondary mt-5 col-md-6" *ngIf="checkResult()" (click)="clickAnswers()"
+                [routerLink]="'/resultQuiz'">Submit</button>
         </div>
     </ng-container>
 
