@@ -16,7 +16,7 @@ import {
 })
 export class QuizService {
   resultAnswers = new BehaviorSubject<FormGroup>(new FormGroup({}));
-  constructor(private http: HttpClient, private fb: FormBuilder) {}
+  constructor(private http: HttpClient) {}
   getCategory(): Observable<TriviaCategory> {
     return this.http
       .get<TriviaCategory>('https://opentdb.com/api_category.php')
