@@ -23,7 +23,15 @@ export interface Question {
   incorrect_answers: string[];
 }
 
-export interface QuizResult extends AbstractControl {
+/* export interface QuizResult extends AbstractControl {
   question: FormControl<Question | null>;
   selectedAnswer: FormControl<string | null>;
+} */
+
+
+export interface QuizResult {
+  question: Question,
+  selectedAnswer: string,
+  answers: string[],
+  id:number
 }

@@ -9,7 +9,8 @@
                 {{ category.name }}
             </option>
         </select>
-        <select name="difficultySelect" id="difficultySelect" [(ngModel)]="difficulty" #difficultySelect class="form-control">
+        <select name="difficultySelect" id="difficultySelect" [(ngModel)]="difficulty" #difficultySelect
+            class="form-control">
             <option value="" [hidden]="+difficultySelect.value >= 0">
                 Select a difficulty
             </option>
@@ -17,27 +18,29 @@
             <option value="2">Medium</option>
             <option value="3">Hard</option>
         </select>
-        <button type="submit" id="createBtn" class="btn" [disabled]="isDisable()"
-            (click)="createQuestions()">
+        <button type="submit" id="createBtn" class="btn" [disabled]="isDisable()" (click)="createQuestions()">
             Create
         </button>
     </div>
 </ng-container>
 <ng-container *ngIf="showQuestions">
- <ng-container *ngIf="hasSelection; else loading">
-    <div *ngFor="let question of questions; index as i">
-        <h4 class="question" [innerHTML]="question.question"></h4>
-        <div class="answers">
-            <ng-container *ngFor="let answer of answers[i]"><!--  -->
-                <button appHighlight class="btn btn-outline-success mr-2"  [innerHTML]="answer"  ><!-- (click)="clickAnswers(answer, i, question)" -->
-                </button>
-            </ng-container>
+    <ng-container *ngIf="hasSelection; else loading">
+
+        <div *ngFor="let question of questionForm.controls; index as i">
+            <h5 class="questions" [innerHTML]="question.value"></h5>
+            <form class="questions" [formGroup]="getFormGroup(selectionForm.controls[i])">
+                <ng-container *ngFor="let value of answersForm.controls[i].value">
+                    <button appHighlight class="btn btn-outline-success mr-2" [name]="value" [innerHTML]="value"
+                        formControlName="item" ngDefaultControl
+                        (click)="onClickAnswer(value, selectionForm.controls[i])"></button>
+                </ng-container>
+            </form>
         </div>
-    </div>
-</ng-container>
+        <div class="questions"> <button class="btn btn-secondary mt-5 col-md-6" *ngIf="checkResult()" (click)="clickAnswers()"
+                [routerLink]="'../resultQuiz'">Submit</button>
+        </div>
+    </ng-container>
 
-<ng-template #loading>
-    <h3 class="title">Loading...</h3>
-</ng-template>
-</ng-container>
-
+    <ng-template #loading>
+        <h3 class="title">Loading...</h3>
+    </ng-template></ng-container>

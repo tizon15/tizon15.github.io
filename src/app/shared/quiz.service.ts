@@ -1,23 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { FormArray, FormBuilder } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { shuffle } from 'lodash';
-import { Observable, catchError, of } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, of } from 'rxjs';
 import {
   DifficultyPipe,
   Levels,
   Question,
-  QuizResult,
   Result,
-  TriviaCategory,
+  TriviaCategory
 } from './index';
-import { FormGroup } from '@angular/forms';
-import { FormControl } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
 })
 export class QuizService {
+  resultAnswers = new BehaviorSubject<FormGroup>(new FormGroup({}));
   constructor(private http: HttpClient, private fb: FormBuilder) {}
   getCategory(): Observable<TriviaCategory> {
     return this.http
@@ -44,7 +42,28 @@ export class QuizService {
       return [];
     }
   }
-
+  newForm(){
+    return new FormGroup({
+      question: new FormArray([]),
+      answers: new FormArray([]),
+      selectedAnswer: new FormArray([]),
+    })
+  }
+  addForm(formGroup: FormGroup, question:Question, answers: string[]){
+    const questionArray = formGroup.controls['question'] as FormArray;
+    const answersArray = formGroup.controls['answers'] as FormArray;
+    const selectedArray = formGroup.controls[
+      'selectedAnswer'
+    ] as FormArray;
+    questionArray.push(new FormControl(question.question));
+    answersArray.push(new FormControl(answers));
+    selectedArray.push(
+      new FormGroup({
+        item: new FormControl('', [Validators.required]),
+      })
+    );
+    return formGroup
+  }
   // formBuilder
   private handleError<T>(_operation = 'operation', result?: T) {
     return (error: string): Observable<T> => {
