@@ -19,6 +19,6 @@ import { QuizComponent } from './quiz/index';
     ReactiveFormsModule,
   ],
   providers: [QuizService],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent, QuizComponent, ResultsComponent],
 })
 export class AppModule {}
