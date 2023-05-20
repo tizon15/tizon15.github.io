@@ -61,11 +61,11 @@ export class ResultsComponent implements OnInit, OnDestroy {
     let correct = selectedAnswer.get('correctAnswer') as FormControl;
     if (value === correct.value && value === item.value) {
       this.score += 1;
-      return 'btn-success ';
+      return 'btn-success';
     } else if (value === item.value) {
-      return 'btn-success ';
-    } else if (value === correct.value) {
       return 'btn-danger';
+    } else if (value === correct.value) {
+      return 'btn-success';
     } else {
       return 'btn-outline-success';
     }

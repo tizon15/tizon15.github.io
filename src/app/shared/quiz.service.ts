@@ -26,7 +26,9 @@ export class QuizService {
   getCategory(): Observable<TriviaCategory> {
     return this.http
       .get<TriviaCategory>('https://opentdb.com/api_category.php')
-      .pipe(catchError(this.handleError<TriviaCategory>('getCategory')));
+      .pipe(catchError(err => {
+        throw 'error in source. Details: ' + err;
+      }));
   }
 
   /**
@@ -52,7 +54,9 @@ export class QuizService {
     let url = `https://opentdb.com/api.php?amount=5&category=${category}&difficulty=${difficulty}&type=multiple`;
     return this.http
       .get<Result>(url)
-      .pipe(catchError(this.handleError<Result>('getQuestions')));
+      .pipe(catchError(err => {
+        throw 'error in source. Details: ' + err;
+      }));
   }
 
   /**
@@ -91,22 +95,5 @@ export class QuizService {
       })
     );
     return formGroup;
-  }
-
-  /**
-   * Method to catch the error if the request to the API fails
-   *
-   * @private
-   * @template T
-   * @param {string} [_operation='operation']
-   * @param {T} [result]
-   * @return {*} 
-   * @memberof QuizService
-   */
-  private handleError<T>(_operation: string = 'operation', result?: T){
-    return (error: string): Observable<T> => {
-      console.error(error);
-      return of(result as T);
-    };
   }
 }

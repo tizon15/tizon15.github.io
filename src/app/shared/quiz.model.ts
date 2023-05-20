@@ -2,7 +2,7 @@ export type Levels = 'easy' | 'medium' | 'hard';
 
 export type ColorScore = 'red' | 'yellow' | 'green';
 
-export type ColorButtons = "btn-success " | "btn-danger" | "btn-outline-success"
+export type ColorButtons = "btn-success" | "btn-danger" | "btn-outline-success"
 export interface TriviaCategory {
   readonly trivia_categories: Category[];
 }
