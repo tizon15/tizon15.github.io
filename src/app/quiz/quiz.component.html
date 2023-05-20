@@ -1,4 +1,4 @@
-<h1 class="title">Quiz Maker</h1>
+<h1 class="title" id="titleMain">Quiz Maker</h1>
 <ng-container>
     <div class="form-group select-wrapper container">
         <select name="categorySelect" id="categorySelect" [(ngModel)]="category" #categorySelect class="form-control">
@@ -18,7 +18,7 @@
             <option value="2">Medium</option>
             <option value="3">Hard</option>
         </select>
-        <button type="submit" id="createBtn" class="btn" [disabled]="isDisable()" (click)="createQuestions()">
+        <button type="submit" id="createBtn" class="btn btn-primary" [disabled]="isDisable()" (click)="createQuestions()">
             Create
         </button>
     </div>
@@ -30,7 +30,7 @@
             <h5 class="questions" [innerHTML]="question.value"></h5>
             <form class="questions" [formGroup]="getSelectedItemFormGroup(selectionForm.controls[i])">
                 <ng-container *ngFor="let value of answersForm.controls[i].value">
-                    <button appToggle class="btn btn-outline-success mr-2" [innerHTML]="value" name="item" 
+                    <button appToggle class="btn btn-outline-success mr-2" id="answersButton" [innerHTML]="value" name="item" 
                         formControlName="item" ngDefaultControl
                         (click)="onClickAnswer(value, selectionForm.controls[i])"></button>
                 </ng-container>
@@ -43,5 +43,5 @@
     </ng-container>
 
     <ng-template #loading>
-        <h3 class="title">Loading...</h3>
+        <h4 class="title">Loading...</h4>
     </ng-template></ng-container>

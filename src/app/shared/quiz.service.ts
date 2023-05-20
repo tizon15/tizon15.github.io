@@ -17,31 +17,50 @@ import {
 export class QuizService {
   resultAnswers = new BehaviorSubject<FormGroup>(new FormGroup({}));
   constructor(private http: HttpClient) {}
+
+  /**
+   * Method to get the categories from the url of the API and return the data
+   *
+   * @return {*}  {Observable<TriviaCategory>}
+   * @memberof QuizService
+   */
   getCategory(): Observable<TriviaCategory> {
     return this.http
       .get<TriviaCategory>('https://opentdb.com/api_category.php')
       .pipe(catchError(this.handleError<TriviaCategory>('getCategory')));
   }
+  /**
+   * Method to transform the difficulty get it from the dropdown and transform the value
+   * with the Difficult Pipe
+   * @param {number} difficulty
+   * @return {*}  {Levels}
+   * @memberof QuizService
+   */
   getDifficulty(difficulty: number): Levels {
     let level = new DifficultyPipe().transform(difficulty);
     return level;
   }
-
+  /**
+   * Method to get the questions passing the values into the url and return the data
+   *
+   * @param {number} category
+   * @param {string} difficulty
+   * @return {*}  {Observable<Result>}
+   * @memberof QuizService
+   */
   getQuestions(category: number, difficulty: string): Observable<Result> {
     let url = `https://opentdb.com/api.php?amount=5&category=${category}&difficulty=${difficulty}&type=multiple`;
     return this.http
       .get<Result>(url)
       .pipe(catchError(this.handleError<Result>('getQuestions')));
   }
-  getAnswers(question: Question): string[] {
-    if (question) {
-      let answers = question.incorrect_answers.concat(question.correct_answer);
-      answers = shuffle(answers);
-      return answers;
-    } else {
-      return [];
-    }
-  }
+
+  /**
+   * Creation of the form for the answers
+   *
+   * @return {*}  {FormGroup}
+   * @memberof QuizService
+   */
   newForm(): FormGroup {
     return new FormGroup({
       question: new FormArray([]),
@@ -49,7 +68,20 @@ export class QuizService {
       selectedAnswer: new FormArray([]),
     });
   }
-  addForm(formGroup: FormGroup, question: Question, answers: string[]): FormGroup {
+  /**
+   * Added the information to the formGroup
+   *
+   * @param {FormGroup} formGroup
+   * @param {Question} question
+   * @param {string[]} answers
+   * @return {*}  {FormGroup}
+   * @memberof QuizService
+   */
+  addForm(
+    formGroup: FormGroup,
+    question: Question,
+    answers: string[]
+  ): FormGroup {
     const questionArray = formGroup.controls['question'] as FormArray;
     const answersArray = formGroup.controls['answers'] as FormArray;
     const selectedArray = formGroup.controls['selectedAnswer'] as FormArray;

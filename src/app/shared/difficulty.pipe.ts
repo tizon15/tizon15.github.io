@@ -3,6 +3,15 @@ import { Levels } from './index';
 
 @Pipe({ name: 'difficulty' })
 export class DifficultyPipe implements PipeTransform {
+
+  /**
+   * Method to transform the value number in one of the Levels type
+   * to later make the query with that
+   *
+   * @param {number} value
+   * @return {*}  {Levels}
+   * @memberof DifficultyPipe
+   */
   transform(value: number): Levels {
     switch (value) {
       default:
