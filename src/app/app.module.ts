@@ -5,12 +5,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { QuizComponent } from './quiz/index';
-import { ResultsComponent } from './results/results.component';
 import { appRoutes } from './routes';
-import { DifficultyPipe, HighlightDirective, QuizService } from './shared/index';
+import { DifficultyPipe, QuizService, ToggleDirective } from './shared/index';
+import { ResultsComponent } from './results/index';
 
 @NgModule({
-  declarations: [AppComponent, QuizComponent, ResultsComponent, DifficultyPipe, HighlightDirective],
+  declarations: [AppComponent, QuizComponent, ResultsComponent, DifficultyPipe, ToggleDirective ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(appRoutes),

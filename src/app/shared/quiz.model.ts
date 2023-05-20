@@ -1,5 +1,3 @@
-import { AbstractControl, FormControl } from '@angular/forms';
-
 export interface TriviaCategory {
   readonly trivia_categories: Category[];
 }
@@ -22,12 +20,6 @@ export interface Question {
   correct_answer: string;
   incorrect_answers: string[];
 }
-
-/* export interface QuizResult extends AbstractControl {
-  question: FormControl<Question | null>;
-  selectedAnswer: FormControl<string | null>;
-} */
-
 
 export interface QuizResult {
   question: Question,

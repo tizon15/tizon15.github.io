@@ -30,7 +30,7 @@
             <h5 class="questions" [innerHTML]="question.value"></h5>
             <form class="questions" [formGroup]="getSelectedItemFormGroup(selectionForm.controls[i])">
                 <ng-container *ngFor="let value of answersForm.controls[i].value">
-                    <button appHighlight class="btn btn-outline-success mr-2" [innerHTML]="value" name="item" 
+                    <button appToggle class="btn btn-outline-success mr-2" [innerHTML]="value" name="item" 
                         formControlName="item" ngDefaultControl
                         (click)="onClickAnswer(value, selectionForm.controls[i])"></button>
                 </ng-container>

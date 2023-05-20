@@ -1,20 +1,16 @@
 import {
   Directive,
   ElementRef,
-  HostListener,
-  Input,
-  TemplateRef,
+  HostListener
 } from '@angular/core';
-import { AbstractControl } from '@angular/forms';
 
 @Directive({
-  selector: '[appHighlight]',
+  selector: '[appToggle]',
 })
-export class HighlightDirective {
-  @Input() appHighlight: any;
+export class ToggleDirective {
   constructor(private el: ElementRef) {}
   @HostListener('click', ['$event.target'])
-  onClick() {
+  onClick(): void {
     let parentElement = this.el.nativeElement.parentElement;
     let elNative = this.el.nativeElement;
     for (let index = 0; index < parentElement.length; index++) {

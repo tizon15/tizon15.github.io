@@ -1,9 +1,7 @@
 import {
-  AfterViewInit,
   Component,
   OnDestroy,
-  OnInit,
-  ViewChild,
+  OnInit
 } from '@angular/core';
 import {
   AbstractControl,
@@ -11,8 +9,8 @@ import {
   FormControl,
   FormGroup,
 } from '@angular/forms';
-import { QuizService } from '../shared/index';
 import { Subscription } from 'rxjs';
+import { QuizService } from '../shared/index';
 
 @Component({
   selector: 'app-results',
@@ -25,7 +23,7 @@ export class ResultsComponent implements OnInit, OnDestroy {
   score: number = 0;
   constructor(private quizService: QuizService) {}
 
-  get questionForm() {
+  get questionForm(): FormArray {
     return this.formGroup.get('question') as FormArray;
   }
 

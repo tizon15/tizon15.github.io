@@ -1,5 +1,7 @@
 # AngularCert2
 
+Project based in Angular v16.0.1 for the codidng practice of the [Angular Certification Level 2](https://angular-training.getlearnworlds.com/course/angular-level-2-certification-exam-prep-package)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.1.
 
 ## Development server
@@ -12,7 +14,7 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Run `ng build` to build the project. The build artifacts will be stored in the `docs/` directory.
 
 ## Running unit tests
 

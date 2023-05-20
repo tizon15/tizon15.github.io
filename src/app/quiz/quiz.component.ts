@@ -16,17 +16,18 @@ import {
   styleUrls: ['./quiz.component.css'],
 })
 export class QuizComponent implements OnInit, OnDestroy {
-  private getCategorySub: Subscription | null | undefined;
-  private getQuestionsSub: Subscription | null | undefined;
+  private getCategorySub!: Subscription | null;
+  private getQuestionsSub!: Subscription | null;
   protected hasSelection = false;
   protected difficulty: string = '';
   protected showQuestions: boolean = false;
-  protected questions: Question[] | undefined;
+  protected questions!: Question[];
   protected category = '';
   protected formGroup: FormGroup = this.quizService.newForm();
-  protected categories: Category[] | undefined;
+  protected categories!: Category[];
 
-  constructor(private quizService: QuizService, private router: Router) {}
+  constructor(private quizService: QuizService) {}
+
   get answersForm() {
     return this.formGroup.get('answers') as FormArray;
   }
@@ -49,29 +50,7 @@ export class QuizComponent implements OnInit, OnDestroy {
       });
   }
 
-  addFormGroup(question: Question, answers: string[]) {
-    this.formGroup = this.quizService.addForm(
-      this.formGroup,
-      question,
-      answers
-    );
-  }
-
-  isDisable(): boolean {
-    return +this.difficulty === 0 || this.category === '' ? true : false;
-  }
-  onClickAnswer(value: string, selectedForm: AbstractControl) {
-    let selectedItem = selectedForm as FormGroup;
-    if (selectedItem.controls['item'].value === value) {
-      selectedItem.controls['item'].patchValue(undefined);
-    } else {
-      selectedItem.controls['item'].patchValue(value);
-    }
-  }
-  checkResult() {
-    return this.formGroup.valid;
-  }
-  createQuestions(): void {
+  protected createQuestions(): void {
     this.reset();
     let difficulty = this.quizService.getDifficulty(+this.difficulty);
     this.getQuestionsSub = this.quizService
@@ -85,7 +64,7 @@ export class QuizComponent implements OnInit, OnDestroy {
       });
   }
 
-  getAnswers(questions: Question[]) {
+  private getAnswers(questions: Question[]): void {
     questions.forEach((question: Question) => {
       this.addFormGroup(
         question,
@@ -93,15 +72,40 @@ export class QuizComponent implements OnInit, OnDestroy {
       );
     });
   }
-  clickAnswers() {
+
+  private addFormGroup(question: Question, answers: string[]): void {
+    this.formGroup = this.quizService.addForm(
+      this.formGroup,
+      question,
+      answers
+    );
+  }
+
+  protected isDisable(): boolean {
+    return +this.difficulty === 0 || this.category === '' ? true : false;
+  }
+  protected onClickAnswer(value: string, selectedForm: AbstractControl): void {
+    let selectedItem = selectedForm as FormGroup;
+    if (selectedItem.controls['item'].value === value) {
+      selectedItem.controls['item'].patchValue(undefined);
+    } else {
+      selectedItem.controls['item'].patchValue(value);
+    }
+  }
+  protected checkResult(): boolean {
+    return this.formGroup.valid;
+  }
+
+  protected clickAnswers(): void {
     this.quizService.resultAnswers.next(this.formGroup);
   }
-  reset() {
+  private reset(): void {
     this.questions = [];
     this.formGroup = this.quizService.newForm();
     this.showQuestions = true;
     this.hasSelection = false;
   }
+
   ngOnDestroy(): void {
     this.reset();
     if (this.getCategorySub) {
