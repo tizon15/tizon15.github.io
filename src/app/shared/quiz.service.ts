@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { shuffle } from 'lodash';
 import { BehaviorSubject, Observable, catchError, of } from 'rxjs';
 import {
   DifficultyPipe,
@@ -29,6 +28,7 @@ export class QuizService {
       .get<TriviaCategory>('https://opentdb.com/api_category.php')
       .pipe(catchError(this.handleError<TriviaCategory>('getCategory')));
   }
+
   /**
    * Method to transform the difficulty get it from the dropdown and transform the value
    * with the Difficult Pipe
@@ -68,6 +68,7 @@ export class QuizService {
       selectedAnswer: new FormArray([]),
     });
   }
+
   /**
    * Added the information to the formGroup
    *
@@ -77,11 +78,7 @@ export class QuizService {
    * @return {*}  {FormGroup}
    * @memberof QuizService
    */
-  addForm(
-    formGroup: FormGroup,
-    question: Question,
-    answers: string[]
-  ): FormGroup {
+  addForm(formGroup: FormGroup,question: Question,answers: string[]): FormGroup {
     const questionArray = formGroup.controls['question'] as FormArray;
     const answersArray = formGroup.controls['answers'] as FormArray;
     const selectedArray = formGroup.controls['selectedAnswer'] as FormArray;
@@ -96,7 +93,17 @@ export class QuizService {
     return formGroup;
   }
 
-  private handleError<T>(_operation = 'operation', result?: T) {
+  /**
+   * Method to catch the error if the request to the API fails
+   *
+   * @private
+   * @template T
+   * @param {string} [_operation='operation']
+   * @param {T} [result]
+   * @return {*} 
+   * @memberof QuizService
+   */
+  private handleError<T>(_operation: string = 'operation', result?: T){
     return (error: string): Observable<T> => {
       console.error(error);
       return of(result as T);

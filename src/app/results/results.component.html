@@ -5,8 +5,8 @@
         <h5 class="questions" [innerHTML]="question?.value"></h5>
         <form class="questions" [formGroup]="getFormGroup(selectionForm.controls[i])">
             <ng-container *ngFor="let value of answersForm.controls[i].value"><!--  -->
-                <button [ngClass]="changeColorButtons(value, selectionForm.controls[i])" id="resultButton" class="btn mr-2 disabled"
-                    formControlName="item" [innerHTML]="value" ngDefaultControl></button>
+                <p [ngClass]="changeColorButtons(value, selectionForm.controls[i])" id="resultButton" class="btn mr-2 disabled"
+                     [innerHTML]="value"></p>
             </ng-container>
         </form>
     </div>

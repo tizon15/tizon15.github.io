@@ -1,0 +1,20 @@
+<ng-container *ngIf="hasSelection; else loading">
+    <div *ngFor="let question of questionForm.controls; index as i">
+        <h5 class="questions" [innerHTML]="question.value"></h5>
+        <form class="questions" [formGroup]="getSelectedItemFormGroup(selectionForm.controls[i])">
+            <ng-container *ngFor="let value of answersForm.controls[i].value">
+                <button appToggle class="btn btn-outline-success mr-2" id="answersButton" [innerHTML]="value" name="item" 
+                    formControlName="item" ngDefaultControl
+                    (click)="onClickAnswer(value, selectionForm.controls[i])"></button>
+            </ng-container>
+        </form>
+    </div>
+    <div class="questions">
+        <button class="btn btn-secondary mt-5 col-md-6" *ngIf="checkResult()" (click)="clickAnswers()"
+            [routerLink]="'/resultQuiz'">Submit</button>
+    </div>
+</ng-container>
+
+<ng-template #loading>
+    <h4 class="title">Loading...</h4>
+</ng-template>

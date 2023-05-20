@@ -16,7 +16,7 @@ import { ColorButtons, ColorScore, QuizService } from '../shared/index';
 export class ResultsComponent implements OnInit, OnDestroy {
   private formGroup!: FormGroup;
   private resultsSubs!: Subscription | null;
-  score: number = 0;
+  protected score: number = 0;
   constructor(private quizService: QuizService) {}
 
   /**
